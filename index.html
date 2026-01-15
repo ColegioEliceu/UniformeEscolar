@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniformes Escolares 2026 - Colégio Eliceu Monteiro Alves</title>
+    
+    <!-- Carregando React e ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Carregando Babel para traduzir o código React -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Carregando Tailwind CSS para o estilo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonte Inter (opcional, para ficar mais bonito) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- ÍCONES (Convertidos para componentes manuais para funcionar sem instalação) ---
+        const IconBase = ({ children, className, ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+                {children}
+            </svg>
+        );
+
+        const Phone = (props) => <IconBase {...props}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></IconBase>;
+        const MapPin = (props) => <IconBase {...props}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></IconBase>;
+        const AlertCircle = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></IconBase>;
+        const ShoppingBag = (props) => <IconBase {...props}><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></IconBase>;
+        const Calendar = (props) => <IconBase {...props}><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></IconBase>;
+        const CheckCircle = (props) => <IconBase {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></IconBase>;
+        const Info = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></IconBase>;
+        const Shirt = (props) => <IconBase {...props}><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></IconBase>;
+        const Scissors = (props) => <IconBase {...props}><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" x2="8.12" y1="4" y2="15.88"/><line x1="14.47" x2="20" y1="14.48" y2="20"/><line x1="8.12" x2="12" y1="8.12" y2="12"/></IconBase>;
+        const User = (props) => <IconBase {...props}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></IconBase>;
+        const GraduationCap = (props) => <IconBase {...props}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></IconBase>;
+
+        // --- APLICAÇÃO REACT (Seu código) ---
+        const App = () => {
+            // Configuração de Cores
+            const theme = {
+                primary: "#640510", // Cor Vinho solicitada
+                secondary: "#960818", // Um tom um pouco mais claro para degradês
+                white: "#ffffff",
+                bgLight: "#f9fafb"
+            };
+
+            // --- CONFIGURAÇÃO DAS IMAGENS (ATUALIZADO PARA A PASTA) ---
+            // Certifique-se de que a pasta 'imagenssite' está junto com este arquivo
+            const schoolLogoUrl = "imagenssite/LOGO.png";      
+            const logoWrama = "imagenssite/LOGO 1.png";        
+            const logoYan = "imagenssite/LOGO 2.png";          
+            const logoMarrophel = "imagenssite/LOGOS 3.png";   
+
+            // URL para a ilustração dos alunos
+            // Atualizado conforme sua solicitação para 'menino.png'
+            const studentsIllustrationUrl = "imagenssite/menino.png";
+
+            // Dados das malharias
+            const stores = [
+                {
+                id: 1,
+                name: "Wrama Malharia",
+                logoUrl: logoWrama, 
+                phone: "99988197948",
+                displayPhone: "(99) 98819-7948",
+                address: "Rua Celso Sereno, n.º 140 - Centro, Presidente Dutra - MA",
+                items: ["Berçário", "Educação Infantil"],
+                note: "O Uniforme completo é o mesmo modelo de 2025!",
+                },
+                {
+                id: 2,
+                name: "Yan Sport",
+                logoUrl: logoYan,
+                phone: "99981358189",
+                displayPhone: "(99) 98135-8189",
+                address: "Ao lado da Clínica do Dr. Vilmar - Presidente Dutra - MA",
+                items: ["Short Saia (Fem.) - 1º ao 5º Ano", "Calça Comprida - 1º ao 9º e Médio"],
+                note: "O Short Saia e a Calça Comprida são o mesmo modelo de 2025!",
+                },
+                {
+                id: 3,
+                name: "Marrophel",
+                logoUrl: logoMarrophel,
+                phone: "98992202041",
+                displayPhone: "(98) 99220-2041",
+                address: "Av. José Olavo Sampaio (próx. a CN Motos) - Pres. Dutra - MA",
+                items: ["Camisa (Masc. e Fem.) - Novo Modelo 2026!", "1º ao 9º Ano e Ensino Médio"],
+                note: "Obrigatório: duas blusas por aluno (uma branca e outra vinho).",
+                isHighlight: true, 
+                }
+            ];
+
+            // Dados dos Modelos de Farda para Destaque
+            const uniformModels = [
+                {
+                title: "Camisa 2026",
+                subtitle: "Novo Modelo!",
+                icon: <Shirt className="w-12 h-12 text-white" />,
+                grades: "1º ao 9º Ano e Ensino Médio",
+                desc: "Modelo atualizado. Obrigatório ter uma branca e uma vinho.",
+                highlight: true
+                },
+                {
+                title: "Short Saia",
+                subtitle: "Feminino",
+                icon: <Scissors className="w-12 h-12 text-[#640510]" />,
+                grades: "1º ao 5º Ano",
+                desc: "Mesmo modelo de 2025.",
+                highlight: false
+                },
+                {
+                title: "Calça Comprida",
+                subtitle: "Unissex",
+                icon: <User className="w-12 h-12 text-[#640510]" />,
+                grades: "1º ao 9º Ano e Médio",
+                desc: "Mesmo modelo de 2025.",
+                highlight: false
+                }
+            ];
+
+            const startDate = "02/02";
+
+            const getWhatsAppLink = (phone, storeName) => {
+                const message = `Olá, vim através do site do Colégio Eliceu Monteiro Alves. Gostaria de saber sobre os uniformes na ${storeName}.`;
+                return `https://wa.me/55${phone}?text=${encodeURIComponent(message)}`;
+            };
+
+            return (
+                <div className="min-h-screen font-sans text-gray-800" style={{ backgroundColor: theme.bgLight }}>
+                
+                {/* Header / Hero Section */}
+                <header className="relative overflow-hidden text-white" style={{ background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.secondary} 100%)` }}>
+                    <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-white opacity-5"></div>
+                    <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 rounded-full bg-black opacity-10"></div>
+                    
+                    <div className="max-w-6xl mx-auto px-4 pt-8 pb-20 md:pt-12 md:pb-32 relative z-10">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                        
+                        <div className="flex-1 text-center md:text-left">
+                        
+                        {/* --- NOVO TOPO: LOGO E NOME DA ESCOLA (Modificado para ficar Logo em cima do Nome) --- */}
+                        <div className="flex flex-col items-center gap-6 mb-10">
+                            {/* Bloco da Logo Branca */}
+                            <div className="p-4 bg-white rounded-3xl shadow-2xl transform hover:scale-105 transition-all duration-300 border-4 border-yellow-400/30">
+                                <img 
+                                src={schoolLogoUrl} 
+                                alt="Logo Colégio Elicéu Monteiro Alves" 
+                                className="h-28 md:h-36 object-contain"
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                }}
+                                />
+                            </div>
+                            
+                            {/* Nome do Colégio em Destaque */}
+                            <div className="text-center">
+                                <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-wide drop-shadow-lg leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>
+                                    Colégio Elicéu<br/>Monteiro Alves
+                                </h1>
+                                <div className="h-2 w-32 bg-yellow-400 rounded-full mt-3 mx-auto shadow-lg"></div>
+                            </div>
+                        </div>
+
+                        <h2 className="text-red-200 font-bold tracking-widest text-lg uppercase mb-2 text-center md:text-left">Uniformes Escolares 2026</h2>
+                        <p className="text-lg text-red-100 max-w-lg mb-8 mx-auto md:mx-0 leading-relaxed text-center md:text-left">
+                            Confira os novos modelos do uniforme escolar e veja onde adquirir cada peça com facilidade.
+                        </p>
+                        
+                        <div className="flex justify-center md:justify-start">
+                            <div className="inline-flex items-center bg-white text-[#640510] rounded-full px-8 py-4 font-bold shadow-xl transform hover:scale-105 transition-transform duration-300 ring-4 ring-yellow-400 ring-opacity-50">
+                                <Calendar className="w-6 h-6 mr-3 text-[#640510]" />
+                                <span className="text-lg">Início obrigatório: {startDate}</span>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div className="hidden md:block w-1/3 relative">
+                        <div className="relative z-10 bg-white p-2 rounded-t-[3rem] rounded-b-3xl shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-500">
+                            <img 
+                                src={studentsIllustrationUrl} 
+                                alt="Ilustração Alunos Uniformizados" 
+                                className="w-full h-auto rounded-t-[2.5rem] rounded-b-2xl object-cover"
+                                style={{ maxHeight: '450px' }}
+                            />
+                            <div className="absolute -bottom-6 -right-6 bg-yellow-400 text-[#640510] font-black py-2 px-6 rounded-lg shadow-lg transform -rotate-6">
+                                VOLTA ÀS AULAS!
+                            </div>
+                        </div>
+                        <div className="absolute inset-0 bg-black opacity-20 rounded-[3rem] transform translate-x-4 translate-y-4 -z-10"></div>
+                        </div>
+                    </div>
+                    </div>
+                </header>
+
+                <main className="max-w-6xl mx-auto px-4 -mt-16 relative z-20 pb-12">
+                    
+                    {/* SEÇÃO: Destaque dos Modelos */}
+                    <div className="mb-20">
+                    <h3 className="text-center text-white font-bold text-2xl mb-8 drop-shadow-md flex items-center justify-center">
+                        <GraduationCap className="w-8 h-8 mr-3" />
+                        Conheça os Modelos 2026
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {uniformModels.map((model, idx) => (
+                        <div 
+                            key={idx} 
+                            className={`rounded-2xl p-6 shadow-xl transition-all hover:-translate-y-2 relative overflow-hidden group ${model.highlight ? 'bg-[#640510] text-white ring-4 ring-yellow-400' : 'bg-white text-gray-800'}`}
+                        >
+                            {model.highlight && (
+                            <div className="absolute top-0 right-0 bg-yellow-400 text-[#640510] text-xs font-bold px-3 py-1 rounded-bl-xl z-10">
+                                ATENÇÃO
+                            </div>
+                            )}
+                            
+                            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-inner ${model.highlight ? 'bg-white/20' : 'bg-gray-100'}`}>
+                            {model.icon}
+                            </div>
+                            
+                            <h4 className="font-bold text-xl mb-1">{model.title}</h4>
+                            <p className={`text-sm font-semibold mb-3 uppercase tracking-wider ${model.highlight ? 'text-red-200' : 'text-[#640510]'}`}>
+                            {model.subtitle}
+                            </p>
+                            
+                            <div className="space-y-2">
+                            <div className={`text-xs px-2 py-1 rounded inline-block font-medium ${model.highlight ? 'bg-white/20' : 'bg-gray-100 text-gray-600'}`}>
+                                Turmas: {model.grades}
+                            </div>
+                            <p className={`text-sm leading-relaxed ${model.highlight ? 'text-gray-200' : 'text-gray-600'}`}>
+                                {model.desc}
+                            </p>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+
+                    {/* Lojas Grid */}
+                    <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center border-l-8 pl-4 rounded-l" style={{ borderColor: theme.primary }}>
+                    Onde Comprar
+                    <span className="text-sm font-normal text-gray-500 ml-4 hidden md:inline-block">(Clique no botão para pedir no WhatsApp)</span>
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    {stores.map((store) => (
+                        <div 
+                        key={store.id} 
+                        className={`bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col`}
+                        >
+                        <div className="p-6 flex-grow">
+                            <div className="flex flex-col items-center mb-6 text-center border-b border-gray-100 pb-4">
+                            <div className="h-24 w-full flex items-center justify-center mb-2 p-2">
+                                <img 
+                                src={store.logoUrl} 
+                                alt={`Logo ${store.name}`} 
+                                className="h-full w-auto object-contain max-w-[180px]"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    // Fallback para placeholder se não achar a imagem
+                                    e.target.src = `https://placehold.co/200x100?text=${store.name.split(' ')[0]}`;
+                                }}
+                                />
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mt-2">{store.name}</h3>
+                            </div>
+
+                            <div className="space-y-4">
+                            {/* SEÇÃO: ITENS DISPONÍVEIS */}
+                            <div className="bg-[#640510] bg-opacity-5 p-5 rounded-xl border-2 border-[#640510] border-opacity-20 shadow-inner">
+                                <p className="text-sm font-black text-[#640510] uppercase tracking-wider mb-4 flex items-center border-b border-[#640510] border-opacity-20 pb-2">
+                                <ShoppingBag className="w-5 h-5 mr-2" />
+                                Itens Disponíveis:
+                                </p>
+                                <ul className="space-y-3">
+                                {store.items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start text-base md:text-lg text-gray-900 font-extrabold bg-white p-3 rounded-lg shadow-sm border border-gray-200">
+                                    <CheckCircle className="w-6 h-6 text-green-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span className="leading-tight">{item}</span>
+                                    </li>
+                                ))}
+                                </ul>
+                            </div>
+
+                            {/* SEÇÃO MODIFICADA: OBSERVAÇÃO COM DESTAQUE */}
+                            {store.note && (
+                                <div className="mt-4 flex items-start bg-blue-100 p-4 rounded-r-xl border-l-8 border-blue-600 shadow-sm transform transition-transform hover:scale-[1.02]">
+                                <Info className="w-8 h-8 mr-3 text-blue-700 flex-shrink-0" />
+                                <div>
+                                    <p className="text-xs font-black text-blue-700 uppercase tracking-widest mb-1">Observação:</p>
+                                    <p className="text-base font-bold text-blue-900 leading-snug">{store.note}</p>
+                                </div>
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-center text-xs text-gray-500 mt-4 text-center px-2">
+                                <MapPin className="w-3 h-3 mr-1 text-gray-400 flex-shrink-0" />
+                                <span>{store.address}</span>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div className="p-4 bg-gray-50 border-t border-gray-100">
+                            <a 
+                            href={getWhatsAppLink(store.phone, store.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center w-full py-3.5 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg hover:brightness-110 group relative overflow-hidden"
+                            style={{ backgroundColor: '#25D366' }}
+                            >
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                            <Phone className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                            Chamar no WhatsApp
+                            </a>
+                        </div>
+                        </div>
+                    ))}
+                    </div>
+
+                    {/* Avisos Finais */}
+                    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                    <div className="bg-gray-900 text-white p-6 flex items-center" style={{ backgroundColor: theme.primary }}>
+                        <AlertCircle className="w-8 h-8 text-yellow-400 mr-4" />
+                        <h3 className="text-2xl font-bold">Lembretes Importantes</h3>
+                    </div>
+                    
+                    <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                        <p className="text-gray-600 mb-6 leading-relaxed">
+                            Para manter a organização e segurança dos nossos alunos, o uso do uniforme completo é indispensável.
+                        </p>
+                        <div className="bg-red-50 border-l-4 p-5 rounded-r-lg shadow-sm" style={{ borderColor: theme.primary }}>
+                            <p className="text-[#640510] font-semibold">
+                            <strong>Atenção Pais:</strong><br/>
+                            É obrigatório ter duas blusas por aluno (uma branca e outra vinho).
+                            </p>
+                        </div>
+                        </div>
+
+                        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                        <h4 className="font-bold text-lg mb-4 flex items-center text-gray-800">
+                            <ShoppingBag className="w-5 h-5 mr-2 text-[#640510]" />
+                            Checklist Completo
+                        </h4>
+                        <ul className="space-y-3">
+                            {[
+                            "Camisa (Branca e Vinho)", 
+                            "Calça ou Short Saia", 
+                            "Meias Brancas", 
+                            "Tênis ou sapatos pretos"
+                            ].map((item, i) => (
+                            <li key={i} className="flex items-center text-gray-700 bg-white px-4 py-3 rounded-xl shadow-sm border border-gray-100">
+                                <div className="w-2.5 h-2.5 rounded-full mr-3" style={{ backgroundColor: theme.primary }}></div>
+                                {item}
+                            </li>
+                            ))}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+
+                </main>
+
+                {/* Footer */}
+                <footer className="text-white py-12 text-center px-4 mt-12" style={{ backgroundColor: '#1a1a1a' }}>
+                    <div className="max-w-4xl mx-auto pt-4">
+                    <p className="mb-2 font-bold text-lg tracking-wide">Colégio Eliceu Monteiro Alves</p>
+                    <p className="text-gray-400 text-sm">Fundado em 1996 • Educando com excelência</p>
+                    <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-center items-center gap-4 text-xs text-gray-600">
+                        <p>© 2026 Todos os direitos reservados.</p>
+                    </div>
+                    </div>
+                </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
